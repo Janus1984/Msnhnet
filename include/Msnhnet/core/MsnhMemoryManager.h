@@ -11,11 +11,15 @@ class MemoryManager
 public:
     static bool memAlign;
 
-    template<typename _Tp> static inline _Tp* alignPtr(_Tp* ptr, int n=(int)sizeof(_Tp))
+    // 这里static是必须的，否则编译会报错。why？
+    template<typename _Tp> 
+    static inline _Tp* alignPtr(_Tp* ptr, int n=(int)sizeof(_Tp))
     {
         return (_Tp*)(((size_t)ptr + n-1) & -n);
     }
 
+    // 对应ncnn中的fastMalloc
+    // 为什么要用模板来写？因为ncnn中的malloc，返回void指针，而这里用的new，返回T类型的指针
     template<typename T>
     static T* effcientNew(size_t size)
     {
@@ -34,6 +38,7 @@ public:
 
     }
 
+    // 对应ncnn中的fastfree
     template<typename T>
     static void effcientDelete(T* ptr)
     {
