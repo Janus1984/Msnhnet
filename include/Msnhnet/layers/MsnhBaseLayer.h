@@ -1,69 +1,69 @@
 ﻿#ifndef MSNHBASELAYER_H
 #define MSNHBASELAYER_H
+
 #include "Msnhnet/config/MsnhnetCfg.h"
-#include "Msnhnet/net/MsnhNetwork.h"
+#include "Msnhnet/core/MsnhMemoryManager.h"
 #include "Msnhnet/core/MsnhSimd.h"
+#include "Msnhnet/net/MsnhNetwork.h"
 #include "Msnhnet/utils/MsnhExport.h"
 #include "Msnhnet/utils/MsnhTimeUtil.h"
-#include "Msnhnet/core/MsnhMemoryManager.h"
 
 #ifdef USE_GPU
-#include "Msnhnet/config/MsnhnetCuda.h"
+    #include "Msnhnet/config/MsnhnetCuda.h"
 #endif
 
-namespace Msnhnet
-{
+namespace Msnhnet {
+
 class NetworkState;
-class MsnhNet_API BaseLayer
-{
+
+class MsnhNet_API BaseLayer {
 public:
     BaseLayer();
     virtual ~BaseLayer();
 
-    static bool     supportAvx;
-    static bool     supportFma;
-    static bool     isPreviewMode;
-    static bool     onlyUseCuda;
-    static bool     onlyUseCpu;
-    static bool     onlyUseGpu;
-    static bool     useFp16;
-    static bool     convSingleOptim;
+    static bool supportAvx;
+    static bool supportFma;
+    static bool isPreviewMode;
+    static bool onlyUseCuda;
+    static bool onlyUseCpu;
+    static bool onlyUseGpu;
+    static bool useFp16;
+    static bool convSingleOptim;
 
 #ifdef USE_GPU
-    static cudaEvent_t     _start;
-    static cudaEvent_t     _stop;
+    static cudaEvent_t _start;
+    static cudaEvent_t _stop;
 #endif
 
-    static void setPreviewMode(const bool &isPreviewMode);
-    static void setMemAlign(const bool &memAlign);
+    static void setPreviewMode(bool isPreviewMode);
+    static void setMemAlign(bool memAlign);
 
 #ifdef USE_GPU
-    static void setForceUseCuda(const bool &forceUseCuda);
-    static void setUseFp16(const bool &useFp16);
-    static void setOnlyGpu(const bool &onlyGpu);
-    static void setOnlyCpu(const bool &onlyCpu);
+    static void setForceUseCuda(const bool& forceUseCuda);
+    static void setUseFp16(const bool& useFp16);
+    static void setOnlyGpu(const bool& onlyGpu);
+    static void setOnlyCpu(const bool& onlyCpu);
 #endif
 
     virtual void mallocMemory();
-    virtual void forward(NetworkState &netState);
+    virtual void forward(NetworkState& netState);
 
 #ifdef USE_GPU
-    virtual void forwardGPU(NetworkState &netState);
-    float *getGpuOutput() const;
+    virtual void forwardGPU(NetworkState& netState);
+    float* getGpuOutput() const;
     void recordCudaStart();
     void recordCudaStop();
-     static std::vector<float> getVecFromCuda(float* const data, const int &num);
+    static std::vector<float> getVecFromCuda(float* const data,
+                                             const int& num);
 #endif
-    virtual void loadAllWeigths(std::vector<float> &weights);
+    virtual void loadAllWeights(std::vector<float>& weights);
 
-    virtual void saveAllWeights(const int& mainIdx, const int& branchIdx=-1, const int& branchIdx1=-1);
+    virtual void saveAllWeights(int mainIdx, int branchIdx, int branchIdx1);
 
     static void initSimd();
 
-    template<typename T>
-    inline void releaseArr(T *& value)
-    {
-
+    template <typename T>
+    void releaseArr(T*& value) {
         MemoryManager::effcientDelete<T>(value);
     }
 
@@ -85,13 +85,13 @@ public:
 
     void setOutChannel(int getOutChannel);
 
-    float *getOutput() const;
+    float* getOutput() const;
 
     int getInputNum() const;
 
     size_t getWorkSpaceSize() const;
 
-    void setWorkSpaceSize(const size_t &getWorkSpaceSize);
+    void setWorkSpaceSize(size_t getWorkSpaceSize);
 
     size_t getNumWeights() const;
 
@@ -128,55 +128,54 @@ public:
     void setBranchLast(bool branchLast);
 
 protected:
-    LayerType          _type;                       
+    LayerType _type;
 
-    ActivationType     _activation;                 
+    ActivationType _activation;
 
     std::vector<float> _actParams;
 
-    int             _num             =  0;       
+    int _num = 0;
 
-    size_t          _workSpaceSize   =  0;
-    size_t          _inputSpaceSize  =  0;
+    size_t _workSpaceSize = 0;
+    size_t _inputSpaceSize = 0;
 
-    uint8_t         _memReUse         =  1;
-    bool            _memoryMalloced   =  false;
+    uint8_t _memReUse = 1;
+    bool _memoryMalloced = false;
 
-    bool            _isBranchLayer    =  false;
-    bool            _isFirstBranch    =  false;
-    bool            _isLastBranch     =  false;
+    bool _isBranchLayer = false;
+    bool _isFirstBranch = false;
+    bool _isLastBranch = false;
 
-    int             _height          =  0;
-    int             _width           =  0;
-    int             _channel         =  0;
+    int _height = 0;
+    int _width = 0;
+    int _channel = 0;
 
-    int             _outHeight       =  0;
-    int             _outWidth        =  0;
-    int             _outChannel      =  0;
+    int _outHeight = 0;
+    int _outWidth = 0;
+    int _outChannel = 0;
 
-    int             _inputNum        =  0;
-    int             _outputNum       =  0;
-    size_t          _maxOutputNum    =  0;
+    int _inputNum = 0;
+    int _outputNum = 0;
+    size_t _maxOutputNum = 0;
 
-    size_t          _numWeights      =  0;       
+    size_t _numWeights = 0;
 
-    int             _batch           =  0;
-    float          *_output          =  nullptr; 
+    int _batch = 0;
+    float* _output = nullptr;
 
-    float           _bFlops          =  0;
-    bool            _weightsLoaded   =  false;
+    float _bFlops = 0;
+    bool _weightsLoaded = false;
 
 #ifdef USE_GPU
-    float          *_gpuOutput       =  nullptr;
+    float* _gpuOutput = nullptr;
 #endif
 
-    std::string     _layerName       =  "BaseLayer";
-    std::string     _layerDetail     =  "";
+    std::string _layerName = "BaseLayer";
+    std::string _layerDetail = "";
 
-    float           _forwardTime     =  0;
-    int             _layerIndex      =  0;
+    float _forwardTime = 0;
+    int _layerIndex = 0;
 };
-}
+}  // namespace Msnhnet
 
-#endif 
-
+#endif

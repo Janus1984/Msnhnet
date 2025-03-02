@@ -1,0 +1,34 @@
+Checks: >
+  -*,
+  cppcoreguidelines-*,
+  bugprone*,
+  google*,
+  performance*,
+  modernize*,
+  readability*,
+  portability*,
+  misc*,
+  cert*,
+  clang-analyzer*,
+  -modernize-use-trailing-return-type,
+  -modernize-use-nodiscard,
+  -modernize-avoid-c-arrays,
+  -readability-identifier-length,
+  -readability-identifier-naming,
+  -readability-redundant-access-specifiers,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-non-private-member-variables-in-classes,
+  -misc-non-private-member-variables-in-classes
+  -readability-avoid-const-params-in-decls
+
+WarningsAsErrors: >
+  clang-analyzer-cplusplus*,
+  clang-analyzer-core*,
+  -clang-analyzer-core-BitwiseShift,
+  clang-analyzer-optin-cplusplus-VirtualCall,
+
+CheckOptions:
+  - key: cppcoreguidelines-avoid-do-while.IgnoreMacros
+    value: True
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: True

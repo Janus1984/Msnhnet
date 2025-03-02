@@ -1,173 +1,152 @@
 ﻿#ifndef MSNHACTIVATIONS_H
 #define MSNHACTIVATIONS_H
-#include <math.h>
+
+#include <cmath>
 #include "Msnhnet/config/MsnhnetCfg.h"
 #include "Msnhnet/core/MsnhSimd.h"
 #include "Msnhnet/utils/MsnhExport.h"
+
 #ifdef USE_X86
-#include "Msnhnet/layers/MsnhActivationsAvx.h"
+    #include "Msnhnet/layers/MsnhActivationsAvx.h"
 #endif
 
 #ifdef USE_GPU
-#include "Msnhnet/layers/cuda/MsnhActivationsGPU.h"
+    #include "Msnhnet/layers/cuda/MsnhActivationsGPU.h"
 #endif
 
 #ifdef USE_ARM
-#ifdef USE_NEON
-#include "Msnhnet/layers/MsnhActivationsNeon.h"
-#endif
+    #ifdef USE_NEON
+        #include "Msnhnet/layers/MsnhActivationsNeon.h"
+    #endif
 #endif
 
-namespace Msnhnet
-{
-class MsnhNet_API Activations
-{
+namespace Msnhnet {
+
+class MsnhNet_API Activations {
 public:
+    static ActivationType getActivation(const std::string& msg);
 
-    static ActivationType getActivation(const std::string &msg);
+    static std::string getActivationStr(const ActivationType& type);
 
-    static std::string getActivationStr(const ActivationType &type);
-
-    static float activate(const float &x, const ActivationType &actType, const float &params = 0.1f);
-    static void activateArray(float *const &x, const int &numX, const ActivationType &actType, const bool &useAVX, const float &param = 0.1f);
-    static void activatePRelu(float *const &x, const int &batch, const int &channels, float *const &weights, const int &whStep, const bool &useAVX);
-    static void activateArrayNormCh(float *const &x, const int &numX, const int &batch, const int &channels, const int &whStep, float *const &output);
-    static void activateArrayNormChSoftMax(float *const &x, const int &numX, const int &batch, const int &channels, const int &whStep, float *const &output, const int &useMaxVal);
+    static float activate(float x, const ActivationType& actType,
+                          float params = 0.1F);
+    static void activateArray(float* x, int numX,
+                              const ActivationType& actType, bool useAVX,
+                              float param = 0.1F);
+    static void activatePRelu(float* x, int batch, int channels,
+                              float* weights, int whStep, bool useAVX);
+    static void activateArrayNormCh(float* x, int numX, int batch,
+                                    int channels, int whStep,
+                                    float* output);
+    static void activateArrayNormChSoftMax(float* x, int numX, int batch,
+                                           int channels, int whStep,
+                                           float* output, int useMaxVal);
 
 private:
-
-    static inline float logisticActivate(const float &x)
-    {
-        return 1.f/(1.f + expf(-x));
+    static float logisticActivate(float x) {
+        return 1.F / (1.F + expf(-x));
     }
 
-    static inline float loggyActivate(const float &x)
-    {
-        return 2.f/(1.f + expf(-x)) - 1.f;
+    static float loggyActivate(float x) {
+        return (2.F / (1.F + expf(-x))) - 1.F;
     }
 
-    static inline float reluActivate(const float &x)
-    {
-        return x*(x>0);
+    static float reluActivate(float x) {
+        return x * static_cast<float>(x > 0);
     }
 
-    static inline float relu6Activate(const float &x)
-    {
-        return (x>0?x:0)>6?6:(x>0?x:0);
+    static float relu6Activate(float x) {
+        return (x > 0 ? x : 0) > 6 ? 6 : (x > 0 ? x : 0);
     }
 
-    static inline float hardSwishActivate(const float &x)
-    {
-        return x*relu6Activate(x+3.f)/6.f;
+    static float hardSwishActivate(float x) {
+        return x * relu6Activate(x + 3.F) / 6.F;
     }
 
-    static inline float eluActivate(const float &x)
-    {
-        return ((x >= 0)*x + (x < 0)*(expf(x)-1.f));
+    static float eluActivate(float x) {
+        return ((static_cast<float>(x >= 0) * x) +
+                (static_cast<float>(x < 0) * (expf(x) - 1.F)));
     }
 
-    static inline float seluActivate(const float &x)
-    {
-        return (x >= 0)*1.0507f*x + (x < 0)*1.0507f*1.6732f*(expf(x) - 1);
+    static float seluActivate(float x) {
+        return (static_cast<float>(x >= 0) * 1.0507F * x) +
+               (static_cast<float>(x < 0) * 1.0507F * 1.6732F *
+                (expf(x) - 1));
     }
 
-    static inline float relieActivate(const float &x)
-    {
-        return (x>0) ? x : .01f*x;
+    static float relieActivate(float x) {
+        return (x > 0) ? x : .01F * x;
     }
 
-    static inline float rampActivate(const float &x)
-    {
-        return x*(x>0) + .1f*x;
+    static float rampActivate(float x) {
+        return (x * static_cast<float>(x > 0)) + (.1F * x);
     }
 
-    static inline float leakyActivate(const float &x, const float& param = 0.1f)
-    {
-        return (x>0) ? x : param*x;
+    static float leakyActivate(float x, float param = 0.1F) {
+        return (x > 0) ? x : param * x;
     }
 
-    static inline float tanhActivate(const float &x)
-    {
-        return ((expf(2*x)-1)/(expf(2*x)+1));
+    static float tanhActivate(float x) {
+        return ((expf(2 * x) - 1) / (expf(2 * x) + 1));
     }
 
-    static inline float stairActivate(const float &x)
-    {
+    static float stairActivate(float x) {
         int n = static_cast<int>(floor(x));
-        if (n%2 == 0)
-        {
-            return (floorf(x/2.f));
+        if (n % 2 == 0) {
+            return (floorf(x / 2.F));
         }
-        else
-        {
-            return static_cast<float>((x - n) + floorf(x/2.f));
-        }
+        return ((x - floor(x)) + floorf(x / 2.F));
     }
 
-    static inline float hardtanActivate(const float &x)
-    {
-        if (x < -1)
-        {
+    static float hardtanActivate(float x) {
+        if (x < -1) {
             return -1;
         }
-        if (x > 1)
-        {
+        if (x > 1) {
             return 1;
         }
         return x;
     }
 
-    static inline float softplusActivate(const float &x, const float &threshold)
-    {
-        if (x > threshold)
-        {
+    static float softplusActivate(float x, float threshold) {
+        if (x > threshold) {
             return x;
         }
-        else if (x < -threshold)
-        {
+        if (x < -threshold) {
             return expf(x);
         }
         return logf(expf(x) + 1);
     }
 
-    static inline float plseActivate(const float &x)
-    {
-        if(x < -4)
-        {
-            return .01f * (x + 4);
+    static float plseActivate(float x) {
+        if (x < -4) {
+            return .01F * (x + 4);
         }
-        if(x > 4)
-        {
-            return .01f * (x - 4) + 1;
+        if (x > 4) {
+            return .01F * (x - 4) + 1;
         }
-        return .125f*x + .5f;
+        return .125F * x + .5F;
     }
 
-    static inline float lhtanActivate(const float &x)
-    {
-        if(x < 0.0f)
-        {
-            return .001f*x;
+    static float lhtanActivate(float x) {
+        if (x < 0.0F) {
+            return .001F * x;
         }
-        if(x > 1.0f)
-        {
-            return .001f*(x-1) + 1;
+        if (x > 1.0F) {
+            return (.001F * (x - 1)) + 1;
         }
         return x;
     }
 
-    static inline float mishActivate(const float &x)
-    {
-        const float mishThreshHold = 20.f;
-        return x*tanhf(softplusActivate(x, mishThreshHold));
+    static float mishActivate(float x) {
+        const float mishThreshHold = 20.F;
+        return x * tanhf(softplusActivate(x, mishThreshHold));
     }
 
-    static inline float swishActivate(const float &x)
-    {
-        return x*logisticActivate(x);
+    static float swishActivate(float x) {
+        return x * logisticActivate(x);
     }
 };
-}
+}  // namespace Msnhnet
 
-#endif 
-
+#endif  // MSNH_ACTIVATIONS_H

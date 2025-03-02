@@ -1,40 +1,42 @@
 ﻿#ifndef MSNHINFERENCECFG_H
 #define MSNHINFERENCECFG_H
-#include <stdint.h>
-#include <float.h>
+
+#include <cassert>
+#include <cfloat>
+#include <chrono>
+#include <cstdint>
+#include <cstring>
 #include <string>
 #include <vector>
-#include <chrono>
+
 #include "Msnhnet/utils/MsnhException.h"
-#include <string.h>
-#include <assert.h>
 
 #ifdef __WIN32__
-#include <math.h>
+    #include <math.h>
 #endif
 
 #ifdef __linux__
-#include <cmath>
+    #include <cmath>
 #endif
 
 #ifdef USE_OMP
-#include <omp.h>
+    #include <omp.h>
 #endif
 
 #ifdef USE_NEON
-#include <arm_neon.h>
+    #include <arm_neon.h>
 #endif
 
 #ifdef USE_OPEN_BLAS
-#include <cblas.h>
+    #include <cblas.h>
 #endif
 
 #ifdef USE_OPENGL
-#include <Msnhnet/config/MsnhnetOpenGL.h>
+    #include <Msnhnet/config/MsnhnetOpenGL.h>
 #endif
 
 #ifndef OMP_THREAD
-#define OMP_THREAD omp_get_max_threads()
+    #define OMP_THREAD omp_get_max_threads()
 #endif
 
 #define CUDA_THREADS 512
@@ -51,7 +53,7 @@
 
 #define MSNH_2_PI 6.28318530906
 
-#define MSNH_PI   3.14159265453
+#define MSNH_PI 3.14159265453
 
 #define MSNH_PI_2 1.57079632726
 
@@ -65,36 +67,36 @@
 
 #define MSNH_DEG_2_RAD 0.0174532925251
 
-#define clip(x,a,b) ((x<a)?a:(x>b)?b:x)
+#define clip(x, a, b) ((x < a) ? a : (x > b) ? b : x)
 
-#define m_swap(a,b) (a=(a)+(b),b=(a)-(b),a=(a)-(b))
+#define m_swap(a, b) (a = (a) + (b), b = (a) - (b), a = (a) - (b))
 
-#define deg2radf(deg) ((float)(deg/180.f*MSNH_PI))
+#define deg2radf(deg) ((float)(deg / 180.f * MSNH_PI))
 
-#define deg2radd(deg) ((double)(deg/180.0*MSNH_PI))
+#define deg2radd(deg) ((double)(deg / 180.0 * MSNH_PI))
 
-#define rad2degf(deg) ((float)(deg/MSNH_PI*180.f))
+#define rad2degf(deg) ((float)(deg / MSNH_PI * 180.f))
 
-#define rad2degd(deg) ((double)(deg/MSNH_PI*180.0))
+#define rad2degd(deg) ((double)(deg / MSNH_PI * 180.0))
 
-#define closeToZeroD(x) (fabs(x)<MSNH_F64_EPS)
+#define closeToZeroD(x) (fabs(x) < MSNH_F64_EPS)
 
-#define closeToZeroF(x) (fabsf(x)<MSNH_F32_EPS)
+#define closeToZeroF(x) (fabsf(x) < MSNH_F32_EPS)
 
 #ifndef M_PI
-#define M_PI 3.14159265453
+    #define M_PI 3.14159265453
 #endif
 
 #ifndef ROT_EPS
-#define ROT_EPS 0.00001
+    #define ROT_EPS 0.00001
 #endif
 
 #define USE_R_VALUE_REF 1
-namespace Msnhnet
-{
-enum ActivationType
-{
-    LOGISTIC    =   0,
+
+namespace Msnhnet {
+
+enum class ActivationType {
+    LOGISTIC = 0,
     RELU,
     RELU6,
     RELIE,
@@ -119,9 +121,8 @@ enum ActivationType
     NONE
 };
 
-enum LayerType
-{
-    CONVOLUTIONAL   =   0,
+enum class LayerType {
+    CONVOLUTIONAL = 0,
     DECONVOLUTIONAL,
     CONNECTED,
     MAXPOOL,
@@ -156,8 +157,7 @@ enum LayerType
     CLIP
 };
 
-enum Arithmetic
-{
+enum class Arithmetic {
     ARITH_ADD = 0,
     ARITH_SUB,
     ARITH_SUB_INV,
@@ -166,9 +166,8 @@ enum Arithmetic
     ARITH_DIV_INV
 };
 
-enum Scientific
-{
-    SCI_ABS=0,
+enum class Scientific {
+    SCI_ABS = 0,
     SCI_ACOS,
     SCI_ASIN,
     SCI_ATAN,
@@ -185,28 +184,13 @@ enum Scientific
     SCI_SQRT
 };
 
-enum ReductionType
-{
-    REDUCTION_SUM   =   0,
-    REDUCTION_MEAN
-};
+enum class ReductionType { REDUCTION_SUM = 0, REDUCTION_MEAN };
 
-enum WeightsType
-{
-    NO_WEIGHTS  =   0,
-    PER_FEATURE,
-    PER_CHANNEL
-};
+enum class WeightsType { NO_WEIGHTS = 0, PER_FEATURE, PER_CHANNEL };
 
-enum WeightsNorm
-{
-    NO_NORM =   0,
-    RELU_NORM,
-    SOFTMAX_NORM
-};
+enum class WeightsNorm { NO_NORM = 0, RELU_NORM, SOFTMAX_NORM };
 
-enum RotSequence
-{
+enum class RotSequence {
     ROT_XYZ,
     ROT_XZY,
     ROT_YXZ,
@@ -214,7 +198,6 @@ enum RotSequence
     ROT_ZXY,
     ROT_ZYX,
 };
-}
+}  // namespace Msnhnet
 
-#endif 
-
+#endif  // MSNHNETCFG_H

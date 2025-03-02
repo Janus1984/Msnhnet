@@ -1,5 +1,6 @@
 ﻿#ifndef MSNHEXPORT_H
 #define MSNHEXPORT_H
+
 #include "Msnhnet/config/MsnhnetMacro.h"
 
 #ifdef EXPORT_MSNHNET_STATIC
@@ -15,8 +16,8 @@
     #else
         #define MsnhNet_EXPORT
         #define MsnhNet_IMPORT
-    #endif
-#endif
+    #endif  // WIN32
+#endif      // EXPORT_MSNHNET_STATIC
 
 #ifdef EXPORT_MSNHNET
     #define MsnhNet_API MsnhNet_EXPORT
@@ -25,12 +26,11 @@
         #define MsnhNet_API MsnhNet_IMPORT
     #else
         #define MsnhNet_API
-    #endif
-#endif
+    #endif  // USE_SHARED_MSNHNET
+#endif      // EXPORT_MSNHNET
 
 #ifdef WIN32
-#pragma warning( disable: 4251 )
-#endif
+    #pragma warning(disable : 4251)
+#endif  // WIN32
 
-#endif 
-
+#endif  // MSNHEXPORT_H

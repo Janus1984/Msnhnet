@@ -3,95 +3,74 @@
 
 #include "Msnhnet/math/MsnhGeometryS.h"
 #include "Msnhnet/math/MsnhMatrixS.h"
-namespace  Msnhnet
-{
-class MsnhNet_API HomTransMatDS
-{
+
+namespace Msnhnet {
+
+class MsnhNet_API HomTransMatDS {
 public:
-    RotationMatDS rotMat;
-    Vector3DS trans;
+    // Default constructor
+    HomTransMatDS() = default;
 
-    HomTransMatDS(){}
+    explicit HomTransMatDS(const RotationMatDS& rotMat) : rotMat(rotMat) { }
 
-    inline HomTransMatDS(const RotationMatDS& rotMat, const Vector3DS& trans)
-    {
-        this->rotMat = rotMat;
-        this->trans  = trans;
-    }
+    explicit HomTransMatDS(const Vector3DS& trans) : trans(trans) { }
 
-    inline HomTransMatDS(const RotationMatDS& rotMat)
-    {
-        this->rotMat = rotMat;
-    }
+    HomTransMatDS(const RotationMatDS& rotMat, const Vector3DS& trans)
+        : rotMat(rotMat), trans(trans) { }
 
-    inline HomTransMatDS(const Vector3DS& trans)
-    {
-        this->trans  = trans;
-    }
+    // Copy constructor
+    HomTransMatDS(const HomTransMatDS& mat) = default;
+    HomTransMatDS& operator=(const HomTransMatDS& mat) = default;
 
-    inline HomTransMatDS& operator =(const HomTransMatDS& mat)
-    {
-        if(this!=&mat)
-        {
-            rotMat = mat.rotMat;
-            trans  = mat.trans;
-        }
-        return *this;
-    }
-
-    inline void translate(const TranslationDS& vector)
-    {
+    void translate(const TranslationDS& vector) {
         trans[0] += vector[0];
         trans[1] += vector[1];
         trans[2] += vector[2];
     }
 
-    inline void translate(const double &x, const double &y, const double &z)
-    {
+    void translate(const double x, const double y, const double z) {
         trans[0] += x;
         trans[1] += y;
         trans[2] += z;
     }
 
-    inline void rotate(const double &angleInRad, const double &x, const double &y, const double &z)
-    {
-        rotate(angleInRad,Vector3DS(x,y,z));
+    void rotate(const double angleInRad, const double x, const double y,
+        const double z) {
+        rotate(angleInRad, Vector3DS(x, y, z));
     }
 
-    inline void rotate(const double &angleInRad, const Vector3DS& vector)
-    {
+    void rotate(const double angleInRad, const Vector3DS& vector) {
         Vector3DS vec = vector;
         vec.normalize();
         const double x = vec[0];
         const double y = vec[1];
         const double z = vec[2];
 
-        rotMat = GeometryS::euler2RotMat(EulerDS(x*angleInRad,y*angleInRad,z*angleInRad),RotSequence::ROT_ZYX);
+        this->rotMat = GeometryS::euler2RotMat(
+            EulerDS(x * angleInRad, y * angleInRad, z * angleInRad),
+            RotSequence::ROT_ZYX);
     }
 
-    inline void rotate(const EulerDS &euler)
-    {
-        rotMat = GeometryS::euler2RotMat(euler,RotSequence::ROT_ZYX);
+    void rotate(const EulerDS& euler) {
+        rotMat = GeometryS::euler2RotMat(euler, RotSequence::ROT_ZYX);
     }
 
-    inline void rotate(const QuaternionDS &quat)
-    {
+    void rotate(const QuaternionDS& quat) {
         rotMat = GeometryS::quaternion2RotMat(quat);
     }
 
-    inline HomTransMatDS invert() const
-    {
+    HomTransMatDS invert() const {
         HomTransMatDS tmp;
 
         tmp.rotMat = rotMat.inverse();
-        tmp.trans  = rotMat.invMul(trans*-1);
+        tmp.trans = rotMat.invMul(trans * -1);
 
         return tmp;
     }
 
-     inline friend HomTransMatDS operator *(const HomTransMatDS& A, const HomTransMatDS& B)
-    {
-        return HomTransMatDS(A.rotMat*B.rotMat, A.rotMat*B.trans+A.trans);
+    friend HomTransMatDS operator*(
+        const HomTransMatDS& A, const HomTransMatDS& B) {
+        return {A.rotMat * B.rotMat, A.rotMat * B.trans + A.trans};
     }
 
     void print();
@@ -100,103 +79,89 @@ public:
 
     std::string toHtmlString() const;
 
-    inline bool operator == (const HomTransMatDS& A)
-    {
+    bool operator==(const HomTransMatDS& A) const {
         return (rotMat == A.rotMat) && (trans == A.trans);
     }
 
-    inline bool operator != (const HomTransMatDS& A)
-    {
+    bool operator!=(const HomTransMatDS& A) const {
         return (rotMat != A.rotMat) || (trans != A.trans);
     }
+
+public:
+    RotationMatDS rotMat;
+    Vector3DS trans;
 };
 
-class MsnhNet_API HomTransMatFS
-{
+class MsnhNet_API HomTransMatFS {
 public:
     RotationMatFS rotMat;
     Vector3FS trans;
 
-    HomTransMatFS(){}
+    HomTransMatFS() = default;
 
-    inline HomTransMatFS(const RotationMatFS& rotMat, const Vector3FS& trans)
-    {
-        this->rotMat = rotMat;
-        this->trans  = trans;
-    }
+    HomTransMatFS(const RotationMatFS& rotMat, const Vector3FS& trans)
+        : rotMat(rotMat), trans(trans) { }
 
-    inline HomTransMatFS(const RotationMatFS& rotMat)
-    {
-        this->rotMat = rotMat;
-    }
+    HomTransMatFS(const RotationMatFS& rotMat) : rotMat(rotMat) { }
 
-    inline HomTransMatFS(const Vector3FS& trans)
-    {
-        this->trans  = trans;
-    }
+    HomTransMatFS(const Vector3FS& trans) : trans(trans) { }
 
-    inline HomTransMatFS& operator =(const HomTransMatFS& mat)
-    {
-        if(this!=&mat)
-        {
+    HomTransMatFS& operator=(const HomTransMatFS& mat) {
+        if (this != &mat) {
             rotMat = mat.rotMat;
-            trans  = mat.trans;
+            trans = mat.trans;
         }
         return *this;
     }
 
-    inline void translate(const TranslationFS& vector)
-    {
+    void translate(const TranslationFS& vector) {
         trans[0] += vector[0];
         trans[1] += vector[1];
         trans[2] += vector[2];
     }
 
-    inline void translate(const float &x, const float &y, const float &z)
-    {
+    void translate(const float& x, const float& y, const float& z) {
         trans[0] += x;
         trans[1] += y;
         trans[2] += z;
     }
 
-    inline void rotate(const float &angleInRad, const float &x, const float &y, const float &z)
-    {
-        rotate(angleInRad,Vector3FS(x,y,z));
+    void rotate(const float& angleInRad, const float& x, const float& y,
+        const float& z) {
+        rotate(angleInRad, Vector3FS(x, y, z));
     }
 
-    inline void rotate(const float &angleInRad, const Vector3FS& vector)
-    {
+    void rotate(const float& angleInRad, const Vector3FS& vector) {
         Vector3FS vec = vector;
         vec.normalize();
         const float x = vec[0];
         const float y = vec[1];
         const float z = vec[2];
 
-        rotMat = GeometryS::euler2RotMat(EulerFS(x*angleInRad,y*angleInRad,z*angleInRad),RotSequence::ROT_ZYX);
+        rotMat = GeometryS::euler2RotMat(
+            EulerFS(x * angleInRad, y * angleInRad, z * angleInRad),
+            RotSequence::ROT_ZYX);
     }
 
-    inline void rotate(const EulerFS &euler)
-    {
-        rotMat = GeometryS::euler2RotMat(euler,RotSequence::ROT_ZYX);
+    void rotate(const EulerFS& euler) {
+        rotMat = GeometryS::euler2RotMat(euler, RotSequence::ROT_ZYX);
     }
 
-    inline void rotate(const QuaternionFS &quat)
-    {
+    void rotate(const QuaternionFS& quat) {
         rotMat = GeometryS::quaternion2RotMat(quat);
     }
 
-    inline HomTransMatFS invert() const
-    {
+    HomTransMatFS invert() const {
         HomTransMatFS tmp;
 
         tmp.rotMat = rotMat.inverse();
-        tmp.trans  = rotMat.invMul(trans*-1);
+        tmp.trans = rotMat.invMul(trans * -1);
         return tmp;
     }
 
-    inline friend HomTransMatFS operator *(const HomTransMatFS& A, const HomTransMatFS& B)
-    {
-        return HomTransMatFS(A.rotMat*B.rotMat, A.rotMat*B.trans+A.trans);
+    friend HomTransMatFS operator*(
+        const HomTransMatFS& A, const HomTransMatFS& B) {
+        return {A.rotMat * B.rotMat, A.rotMat * B.trans + A.trans};
     }
 
     void print();
@@ -205,18 +170,15 @@ public:
 
     std::string toHtmlString() const;
 
-    inline bool operator == (const HomTransMatFS& A)
-    {
+    bool operator==(const HomTransMatFS& A) const {
         return (rotMat == A.rotMat) && (trans == A.trans);
     }
 
-    inline bool operator != (const HomTransMatFS& A)
-    {
+    bool operator!=(const HomTransMatFS& A) const {
         return (rotMat != A.rotMat) || (trans != A.trans);
     }
 };
 
-}
+}  // namespace Msnhnet
 
-#endif 
-
+#endif  // MSNHHOMTRANSMATS_H
