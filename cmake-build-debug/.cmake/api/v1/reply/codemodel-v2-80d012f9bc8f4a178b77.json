@@ -1,0 +1,406 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-5aadfe25212c3b251c46.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "src",
+					"jsonFile" : "directory-src-Debug-b6cf2213fc5053b67c22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "examples",
+					"childIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples-Debug-1c8b83b621b6ef38a245.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "examples"
+				},
+				{
+					"build" : "examples/deeplearning/lenet5",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.lenet5-Debug-530579a07ceade730bf0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/lenet5",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "examples/deeplearning/classify",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.classify-Debug-43c1666cd20103a69f41.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/classify",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "examples/deeplearning/yolov3",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.yolov3-Debug-b8c80b40ab50ab08a961.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/yolov3",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "examples/deeplearning/yolov3tiny",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.yolov3tiny-Debug-3d0584565e62923be3ac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/yolov3tiny",
+					"targetIndexes" : 
+					[
+						9
+					]
+				},
+				{
+					"build" : "examples/deeplearning/landmark106",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.landmark106-Debug-125e811f4a7e1a51fffe.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/landmark106",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "examples/deeplearning/yolov4",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.yolov4-Debug-67460d9840c83fc5c325.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/yolov4",
+					"targetIndexes" : 
+					[
+						10
+					]
+				},
+				{
+					"build" : "examples/deeplearning/unet",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.unet-Debug-d12d5849e3619b05f2e4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/unet",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "examples/deeplearning/fcns",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.fcns-Debug-7d4d1de8a705e96c75d2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/fcns",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "examples/deeplearning/yolov5s",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.yolov5s-Debug-70ed609dd28222466b69.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/yolov5s",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "examples/deeplearning/yolov5m",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.deeplearning.yolov5m-Debug-be761c87f405887617c6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/deeplearning/yolov5m",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "examples/robotics/puma560",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.robotics.puma560-Debug-34cb47bc9ea3a097720f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/robotics/puma560",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "examples/robotics/ur5",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-examples.robotics.ur5-Debug-4a9643be33ed1e7cc56f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "examples/robotics/ur5",
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14
+					],
+					"name" : "Msnhnet",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "Msnhnet::@145eef247bfb46b6828c",
+					"jsonFile" : "target-Msnhnet-Debug-5d9038b45a7febbe10f9.json",
+					"name" : "Msnhnet",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "classify::@8144ad7e96253f596a4a",
+					"jsonFile" : "target-classify-Debug-d9227786286d7868142c.json",
+					"name" : "classify",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "fcns::@a96e9c1f1751294ed6c0",
+					"jsonFile" : "target-fcns-Debug-d71c6c8cc891b5b9b9b5.json",
+					"name" : "fcns",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "landmark106::@09b690314ddece7a8998",
+					"jsonFile" : "target-landmark106-Debug-a267ee2ff10c285f366e.json",
+					"name" : "landmark106",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "lenet5::@69932eb5369c41f3defa",
+					"jsonFile" : "target-lenet5-Debug-9c531149e5dcb86db616.json",
+					"name" : "lenet5",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 13,
+					"id" : "puma560::@d8ec7663e86bacac86ac",
+					"jsonFile" : "target-puma560-Debug-49235d7ca5016c69ed4e.json",
+					"name" : "puma560",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "unet::@dd22d766f479b79646a1",
+					"jsonFile" : "target-unet-Debug-d32544b18fd63c753c1a.json",
+					"name" : "unet",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 14,
+					"id" : "ur5::@6796222addee3d9a28a4",
+					"jsonFile" : "target-ur5-Debug-53ca801d3656a857da09.json",
+					"name" : "ur5",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "yolov3::@3f90aac106bc7fe598df",
+					"jsonFile" : "target-yolov3-Debug-178433361fd79156ba9d.json",
+					"name" : "yolov3",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "yolov3tiny::@9f52025c46bd464a9f1b",
+					"jsonFile" : "target-yolov3tiny-Debug-d2b3c53839bf50940f2b.json",
+					"name" : "yolov3tiny",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "yolov4::@8762039fd7a8586efa81",
+					"jsonFile" : "target-yolov4-Debug-38ae9f6c17208b695f72.json",
+					"name" : "yolov4",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "yolov5m::@94bbf871891067027e0c",
+					"jsonFile" : "target-yolov5m-Debug-665b7a35de254015b33b.json",
+					"name" : "yolov5m",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 11,
+					"id" : "yolov5s::@3ad879d94b42a608a86e",
+					"jsonFile" : "target-yolov5s-Debug-6fefc861669083ef13bc.json",
+					"name" : "yolov5s",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/janus/inference/Msnhnet/cmake-build-debug",
+		"source" : "/home/janus/inference/Msnhnet"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

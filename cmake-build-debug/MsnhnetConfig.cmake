@@ -1,0 +1,5 @@
+﻿include(CMakeFindDependencyMacro)
+get_filename_component(Msnhnet_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(Msnhnet_INCLUDE_DIR "${Msnhnet_DIR}/../../../include")
+set(Msnhnet_LIBRARIES "Msnhnet")
+include("${CMAKE_CURRENT_LIST_DIR}/MsnhnetTargets.cmake")
